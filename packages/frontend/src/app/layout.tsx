@@ -7,7 +7,7 @@ import { Web3Modal } from "../context/Web3Modal";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Web3Modal",
+  title: "Dapp Sandbox",
   description: "Web3Modal Example",
 };
 

@@ -3,10 +3,12 @@
 import { createWeb3Modal, defaultWagmiConfig } from "@web3modal/wagmi/react";
 
 import { WagmiConfig } from "wagmi";
-import { arbitrum, mainnet } from "viem/chains";
+import { mainnet, polygon, polygonMumbai, hardhat } from "viem/chains";
 
+const PROJECT_ID = process.env.NEXT_PUBLIC_WC_PROJECT_ID;
+if (PROJECT_ID === undefined) throw new Error("WC_PROJECT_ID is undefined");
 // 1. Get projectId
-const projectId = "YOUR_PROJECT_ID";
+const projectId = PROJECT_ID;
 
 // 2. Create wagmiConfig
 const metadata = {
@@ -16,7 +18,7 @@ const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
-const chains = [mainnet, arbitrum];
+const chains = [mainnet, polygon, polygonMumbai, hardhat];
 const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata });
 
 // 3. Create modal
