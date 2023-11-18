@@ -18,7 +18,7 @@ export default function Header() {
             <a onClick={() => router.push("/page1")}>トークン発行ページ</a>
           </li>
           <li>
-            <a onClick={() => router.push("/page2")}>トークン一覧</a>
+            <a onClick={() => router.push("/tokens")}>トークン一覧</a>
           </li>
         </ul>
       </div>
