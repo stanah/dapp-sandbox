@@ -11,11 +11,10 @@ async function main() {
     value: lockedAmount,
   });
 
-  console.log(
-    `Lock with ${formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
-  );
+  console.log(`Lock with ${formatEther(lockedAmount)}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`);
+
+  const token = await hre.viem.deployContract("ERC3525GettingStarted");
+  console.log(token);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
