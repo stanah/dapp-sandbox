@@ -7,7 +7,7 @@ import { isAddress } from "viem";
 // import { abi } from "../../../../../viem-sandbox/artifacts/contracts/ERC3525GettingStarted.sol/ERC3525GettingStarted.json";
 
 // デプロイ済みのコントラクトのABIを取得する
-import { abi } from "../../../artifacts/contracts/ERC3525GettingStarted.sol/ERC3525GettingStarted.json";
+import ERC3525GettingStarted from "../../../artifacts/contracts/ERC3525GettingStarted.sol/ERC3525GettingStarted.json";
 
 // TODO: ネットワークに応じたコントラクトアドレスを取得する
 // const contractAddress = process.env.NEXT_PUBLIC_LOCALHOST_CONTRACT_ADDRESS;
@@ -17,7 +17,7 @@ export default function Page1() {
   if (contractAddress == null || !isAddress(contractAddress)) throw new Error("CONTRACT_ADDRESS is not set");
   const { data, isError, isLoading } = useContractRead({
     address: contractAddress,
-    abi: abi,
+    abi: ERC3525GettingStarted.abi,
     functionName: "owner",
   });
   console.log(data, isError, isLoading);
