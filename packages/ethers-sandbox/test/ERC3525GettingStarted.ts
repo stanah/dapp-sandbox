@@ -1,6 +1,6 @@
-import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-import { expect } from "chai";
-import { ethers } from "hardhat";
+import {loadFixture} from "@nomicfoundation/hardhat-network-helpers";
+import {expect} from "chai";
+import {ethers} from "hardhat";
 
 describe("ERC3525GettingStarted", function () {
   // We define a fixture to reuse the same setup in every test.
@@ -10,19 +10,15 @@ describe("ERC3525GettingStarted", function () {
     // Contracts are deployed using the first signer/account by default
     const [owner, otherAccount] = await ethers.getSigners();
 
-    const GettingStarted = await ethers.getContractFactory(
-      "ERC3525GettingStarted"
-    );
+    const GettingStarted = await ethers.getContractFactory("ERC3525GettingStarted");
     const gettingStarted = await GettingStarted.deploy(owner.address);
 
-    return { gettingStarted, owner, otherAccount };
+    return {gettingStarted, owner, otherAccount};
   }
 
   describe("Deployment", function () {
     it("Should set the right owner", async function () {
-      const { gettingStarted, owner } = await loadFixture(
-        deployGettingStartedFixture
-      );
+      const {gettingStarted, owner} = await loadFixture(deployGettingStartedFixture);
 
       expect(await gettingStarted.owner()).to.equal(owner.address);
     });
@@ -31,23 +27,19 @@ describe("ERC3525GettingStarted", function () {
   describe("Mintable", function () {
     describe("Validations", function () {
       it("Should revert with not owner", async function () {
-        const { gettingStarted, owner, otherAccount } = await loadFixture(
-          deployGettingStartedFixture
-        );
+        const {gettingStarted, owner, otherAccount} = await loadFixture(deployGettingStartedFixture);
         const slot = "3525";
         const value = ethers.parseEther("9.5");
 
-        await expect(
-          gettingStarted.connect(otherAccount).mint(owner.address, slot, value)
-        ).to.be.revertedWith("ERC3525GettingStarted: only owner can mint");
+        await expect(gettingStarted.connect(otherAccount).mint(owner.address, slot, value)).to.be.revertedWith(
+          "ERC3525GettingStarted: only owner can mint",
+        );
       });
     });
 
     describe("Mint", function () {
       it("Should mint to other account", async function () {
-        const { gettingStarted, owner, otherAccount } = await loadFixture(
-          deployGettingStartedFixture
-        );
+        const {gettingStarted, owner, otherAccount} = await loadFixture(deployGettingStartedFixture);
         const slot = 3525;
         const value = await ethers.parseEther("9.5");
 
