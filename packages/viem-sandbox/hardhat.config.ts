@@ -9,6 +9,11 @@ dotenvConfig({ path: path.resolve(__dirname, "../../.env") });
 // 10000ETHをweiに変換した値
 const valueInWei = "10000000000000000000000";
 
+// デプロイに使う秘密鍵
+const deployPrivateKey = process.env.DEPLOY_PRIVATE_KEY;
+if (deployPrivateKey == null || deployPrivateKey.length == 0) throw new Error("DEPLOY_PRIVATE_KEY is not set");
+
+// テストアカウント用の秘密鍵
 const privateKey0 = process.env.PRIVATE_KEY_0 || "";
 const privateKey1 = process.env.PRIVATE_KEY_1 || "";
 const privateKey2 = process.env.PRIVATE_KEY_2 || "";
@@ -20,10 +25,14 @@ const privateKey7 = process.env.PRIVATE_KEY_7 || "";
 const privateKey8 = process.env.PRIVATE_KEY_8 || "";
 const privateKey9 = process.env.PRIVATE_KEY_9 || "";
 
+const alchemyPolygonUrl = process.env.ALCHEMY_POLYGON_MAINNET_URL || "";
+const alchemyMumbaiUrl = process.env.ALCHEMY_POLYGON_MUMBAI_URL || "";
+
 const config: HardhatUserConfig = {
   networks: {
     hardhat: {
       accounts: [
+        { privateKey: deployPrivateKey, balance: valueInWei },
         { privateKey: privateKey0, balance: valueInWei },
         { privateKey: privateKey1, balance: valueInWei },
         { privateKey: privateKey2, balance: valueInWei },
@@ -35,6 +44,14 @@ const config: HardhatUserConfig = {
         { privateKey: privateKey8, balance: valueInWei },
         { privateKey: privateKey9, balance: valueInWei },
       ],
+    },
+    polygon: {
+      url: alchemyPolygonUrl,
+      accounts: [deployPrivateKey],
+    },
+    mumbai: {
+      url: alchemyMumbaiUrl,
+      accounts: [deployPrivateKey],
     },
   },
   solidity: {

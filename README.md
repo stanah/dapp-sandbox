@@ -1,12 +1,8 @@
-`.env`ファイル
+`.env`ファイルを編集する (ファイル内コメント参照)
 
 ```bash
-PRIVATE_KEY_0=0x...
-PRIVATE_KEY_1=0x...
-# ...
-PRIVATE_KEY_9=0x...
-NEXT_PUBLIC_WC_PROJECT_ID=xxx # WalletConnectのプロジェクトID
-CONTRACT_ADDRESS=xxx # スマートコントラクトをデプロイ後に取得して書き込む
+cp .env.example .env
+vim .env
 ```
 
 ```bash
@@ -18,6 +14,7 @@ npx hardhat node
 
 # スマートコントラクトをデプロイ
 npx hardhat run --network localhost scripts/deploy.ts
+# npx hardhat run --network mumbai scripts/deploy.ts
 
 cd ../frontend
 # yarn install
