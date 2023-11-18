@@ -1,11 +1,20 @@
 "use client";
 
 import { useContractRead, useContractWrite } from "wagmi";
+import { isAddress } from "viem";
 
-import { abi } from "../../../../../viem-sandbox/artifacts/contracts/ERC3525GettingStarted.sol/ERC3525GettingStarted.json";
-const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+// 新規にデプロイしたコントラクトのABIを取得する場合
+// import { abi } from "../../../../../viem-sandbox/artifacts/contracts/ERC3525GettingStarted.sol/ERC3525GettingStarted.json";
+
+// デプロイ済みのコントラクトのABIを取得する
+import { abi } from "../../../artifacts/contracts/ERC3525GettingStarted.sol/ERC3525GettingStarted.json";
+
+// TODO: ネットワークに応じたコントラクトアドレスを取得する
+// const contractAddress = process.env.NEXT_PUBLIC_LOCALHOST_CONTRACT_ADDRESS;
+const contractAddress = process.env.NEXT_PUBLIC_MUMBAI_CONTRACT_ADDRESS;
 
 export default function Page1() {
+  if (contractAddress == null || !isAddress(contractAddress)) throw new Error("CONTRACT_ADDRESS is not set");
   const { data, isError, isLoading } = useContractRead({
     address: contractAddress,
     abi: abi,
