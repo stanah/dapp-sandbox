@@ -1,11 +1,8 @@
-`.env`ファイルを編集する (ファイル内コメント参照)
-
 ```bash
+# `.env`ファイルを編集する (ファイル内コメント参照)
 cp .env.example .env
 vim .env
-```
 
-```bash
 cd packages/viem-sandbox
 # yarn install
 
@@ -18,6 +15,10 @@ npx hardhat run --network localhost scripts/deploy.ts
 
 cd ../frontend
 # yarn install
+
+# フロントエンド用の環境変数ファイルを編集する
+cp .env.example .env
+vim .env
 
 yarn dev
 
