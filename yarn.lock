@@ -871,10 +871,9 @@
   dependencies:
     antlr4ts "^0.5.0-alpha.4"
 
-"@solvprotocol/erc-3525@^1.4.0":
+"@solvprotocol/erc-3525@git+https://github.com/stanah/erc-3525#fix-ts-1214":
   version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@solvprotocol/erc-3525/-/erc-3525-1.4.0.tgz#62284d51f0dcc3f8dc42fe225c21b0c1af79fec2"
-  integrity sha512-2L2PmkixuvTDVUSsvvAVk37pFwgFhud4Gg00RFdovBiSsPfnVbVWi32nLOFww/Z8z3q73/ZyTEbnlnqkanlDEQ==
+  resolved "git+https://github.com/stanah/erc-3525#fa23240d70796ac6ea5f0e2329a15ddd369440a8"
   dependencies:
     "@openzeppelin/contracts" "^4.7.3"
     "@openzeppelin/contracts-upgradeable" "^4.7.3"

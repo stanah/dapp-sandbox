@@ -2,7 +2,7 @@
 pragma solidity ^0.8.23;
 
 import "@openzeppelin/contracts/utils/Strings.sol";
-import "@solvprotocol/erc-3525/ERC3525SlotEnumerable.sol";
+import "@solvprotocol/erc-3525/contracts/ERC3525SlotEnumerable.sol";
 
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";

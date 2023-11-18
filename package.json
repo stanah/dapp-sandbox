@@ -32,6 +32,6 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "4.9.3",
-    "@solvprotocol/erc-3525": "^1.4.0"
+    "@solvprotocol/erc-3525": "git+https://github.com/stanah/erc-3525#fix-ts-1214"
   }
 }
