@@ -1,24 +1,27 @@
-import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
-import { expect } from "chai";
-import { ethers } from "hardhat";
+import {loadFixture} from "@nomicfoundation/hardhat-network-helpers";
+import {expect} from "chai";
+import hre from "hardhat";
+import {getAddress, parseGwei} from "viem";
 
 describe("ERC3525GettingStarted", function () {
-  // We define a fixture to reuse the same setup in every test.
-  // We use loadFixture to run this setup once, snapshot that state,
-  // and reset Hardhat Network to that snapshot in every test.
   async function deployGettingStartedFixture() {
-    // Contracts are deployed using the first signer/account by default
-    const [owner, otherAccount] = await ethers.getSigners();
+    const [owner, otherAccount] = await hre.viem.getWalletClients();
 
-    const GettingStarted = await ethers.getContractFactory("ERC3525GettingStarted");
-    const gettingStarted = await GettingStarted.deploy(owner.address);
+    const gettingStarted = await hre.viem.deployContract("ERC3525GettingStarted");
 
-    return { gettingStarted, owner, otherAccount };
+    const publicClient = await hre.viem.getPublicClient();
+
+    return {
+      gettingStarted,
+      owner,
+      otherAccount,
+      publicClient,
+    };
   }
 
   describe("Deployment", function () {
     it("Should set the right owner", async function () {
-      const { gettingStarted, owner } = await loadFixture(deployGettingStartedFixture);
+      const {gettingStarted, owner} = await loadFixture(deployGettingStartedFixture);
 
       expect(await gettingStarted.owner()).to.equal(owner.address);
     });
@@ -27,7 +30,7 @@ describe("ERC3525GettingStarted", function () {
   describe("Mintable", function () {
     describe("Validations", function () {
       it("Should revert with not owner", async function () {
-        const { gettingStarted, owner, otherAccount } = await loadFixture(deployGettingStartedFixture);
+        const {gettingStarted, owner, otherAccount} = await loadFixture(deployGettingStartedFixture);
         const slot = "3525";
         const value = ethers.parseEther("9.5");
 
@@ -39,7 +42,7 @@ describe("ERC3525GettingStarted", function () {
 
     describe("Mint", function () {
       it("Should mint to other account", async function () {
-        const { gettingStarted, owner, otherAccount } = await loadFixture(deployGettingStartedFixture);
+        const {gettingStarted, owner, otherAccount} = await loadFixture(deployGettingStartedFixture);
         const slot = 3525;
         const value = await ethers.parseEther("9.5");
 
