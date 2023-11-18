@@ -1,20 +1,10 @@
-import { formatEther, parseEther } from "viem";
+import { getAddress } from "viem";
 import hre from "hardhat";
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = BigInt(currentTimestampInSeconds + 60);
-
-  const lockedAmount = parseEther("0.001");
-
-  const lock = await hre.viem.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
-
-  console.log(`Lock with ${formatEther(lockedAmount)}ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`);
-
-  const token = await hre.viem.deployContract("ERC3525GettingStarted");
-  console.log(token);
+  const [owner] = await hre.viem.getWalletClients();
+  const gettingStarted = await hre.viem.deployContract("ERC3525GettingStarted", [getAddress(owner.account.address)]);
+  console.log(gettingStarted.abi, gettingStarted.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere
