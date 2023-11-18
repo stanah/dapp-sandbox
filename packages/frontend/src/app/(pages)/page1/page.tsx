@@ -1,6 +1,6 @@
 "use client";
 
-import { useContractRead, useContractWrite } from "wagmi";
+import { useContractRead, usePrepareContractWrite, useContractWrite, useAccount } from "wagmi";
 import { isAddress } from "viem";
 
 // 新規にデプロイしたコントラクトのABIを取得する場合
@@ -15,12 +15,20 @@ const contractAddress = process.env.NEXT_PUBLIC_MUMBAI_CONTRACT_ADDRESS;
 
 export default function Page1() {
   if (contractAddress == null || !isAddress(contractAddress)) throw new Error("CONTRACT_ADDRESS is not set");
+  const { address } = useAccount();
   const { data, isError, isLoading } = useContractRead({
     address: contractAddress,
     abi: ERC3525GettingStarted.abi,
     functionName: "owner",
   });
-  console.log(data, isError, isLoading);
+
+  const { config, error } = usePrepareContractWrite({
+    address: contractAddress,
+    abi: ERC3525GettingStarted.abi,
+    functionName: "mint",
+    args: [address, 10, 100], // address to_, uint256 slot_, uint256 amount_
+  });
+  const { write } = useContractWrite(config);
 
   return (
     <main className="flex flex-col space-y-4 items-center justify-between p-10">
@@ -46,9 +54,10 @@ export default function Page1() {
         </div>
       </div>
 
-      <button className="btn btn-primary" onClick={() => alert("未実装")}>
-        何か実行
+      <button className="btn btn-primary" disabled={!write} onClick={() => write?.()}>
+        Mint
       </button>
+      {error && <div>An error occurred preparing the transaction: {error.message}</div>}
     </main>
   );
 }

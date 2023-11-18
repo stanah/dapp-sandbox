@@ -15,20 +15,10 @@ export default function Header() {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a onClick={() => router.push("/page1")}>Page 1</a>
+            <a onClick={() => router.push("/page1")}>トークン発行ページ</a>
           </li>
-          <li tabIndex={0}>
-            <details>
-              <summary>Page 2</summary>
-              <ul className="p-2">
-                <li>
-                  <a onClick={() => router.push("/page2/1")}>ID: 1</a>
-                </li>
-                <li>
-                  <a onClick={() => router.push("/page2/2")}>ID: 2</a>
-                </li>
-              </ul>
-            </details>
+          <li>
+            <a onClick={() => router.push("/page2")}>トークン一覧</a>
           </li>
         </ul>
       </div>
