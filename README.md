@@ -29,3 +29,15 @@ yarn dev
 ```bash
 npx hardhat verify --network mumbai 0xee0a1a5f575ca95ec6b73c605667216954c46bb0 0x2d77A7210ffb43DF7Ea8Ac5d3d8d38d06F14a973
 ```
+
+---
+
+Next steps:
+
+1. Run `graph auth` to authenticate with your deploy key.
+
+2. Type `cd sandbox` to enter the subgraph.
+
+3. Run `yarn deploy` to deploy the subgraph.
+
+Make sure to visit the documentation on https://thegraph.com/docs/ for further information.
