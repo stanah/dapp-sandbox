@@ -8,6 +8,7 @@
   "author": "stanah",
   "license": "MIT",
   "devDependencies": {
+    "@graphprotocol/graph-cli": "^0.61.0",
     "dotenv": "^16.3.1",
     "prettier": "^3.1.0",
     "prettier-plugin-solidity": "^1.2.0"

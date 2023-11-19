@@ -13,6 +13,9 @@ const valueInWei = "10000000000000000000000";
 const deployPrivateKey = process.env.DEPLOY_PRIVATE_KEY;
 if (deployPrivateKey == null || deployPrivateKey.length == 0) throw new Error("DEPLOY_PRIVATE_KEY is not set");
 
+const POLYGON_SCAN_API_KEY = process.env.POLYGON_SCAN_API_KEY;
+if (POLYGON_SCAN_API_KEY == null) throw new Error("POLYGON_SCAN_API_KEY is not set");
+
 // テストアカウント用の秘密鍵
 const privateKey0 = process.env.PRIVATE_KEY_0 || "";
 const privateKey1 = process.env.PRIVATE_KEY_1 || "";
@@ -66,6 +69,14 @@ const config: HardhatUserConfig = {
         },
       },
     ],
+  },
+  sourcify: {
+    enabled: true,
+  },
+  etherscan: {
+    apiKey: {
+      polygonMumbai: POLYGON_SCAN_API_KEY,
+    },
   },
 };
 
