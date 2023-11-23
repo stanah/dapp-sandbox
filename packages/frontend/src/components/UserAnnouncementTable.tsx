@@ -57,7 +57,17 @@ const UserAnnouncementRow = ({ userAnnouncement }: { userAnnouncement: UserAnnou
         {truncateString(userAnnouncement.txHash)}
         <CopyButton value={userAnnouncement.txHash} />
       </td>
-      <td>{new Date(Number(userAnnouncement.timestamp) * 1000).toISOString()} </td>
+      <td>
+        {new Date(Number(userAnnouncement.timestamp) * 1000).toLocaleString("ja-JP", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })}
+      </td>
+      {/* <td>{new Date(Number(userAnnouncement.timestamp) * 1000).toISOString()} </td> */}
       <td>{userAnnouncement.isWithdrawn ? "はい" : "いいえ"}</td>
     </tr>
   );
