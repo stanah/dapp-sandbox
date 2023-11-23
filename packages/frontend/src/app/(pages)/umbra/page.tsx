@@ -2,16 +2,17 @@
 
 import { Umbra, StealthKeyRegistry, UserAnnouncement } from "@umbracash/umbra-js";
 import { isAddress, parseEther } from "viem";
-import { ethers, providers } from "ethers";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useAccount, useWalletClient } from "wagmi";
 import UserAnnouncementTable from "@/components/UserAnnouncementTable";
+import { useEthersSigner } from "@/context/ethersAdapter";
+import { EthersProvider } from "@umbracash/umbra-js/build/src/types";
 
 process.env.INFURA_ID = process.env.NEXT_PUBLIC_INFURA_ID;
 const SEND_VALUE = "0.1";
 const AMOUNT = parseEther(SEND_VALUE);
 
-const scan = async (provider?: providers.Web3Provider) => {
+const scan = async (provider?: EthersProvider) => {
   if (provider == null) throw new Error("provider is null");
   const signer = provider.getSigner();
   const chainId = await signer.getChainId();
@@ -20,8 +21,6 @@ const scan = async (provider?: providers.Web3Provider) => {
   const { spendingKeyPair, viewingKeyPair } = await umbra.generatePrivateKeys(signer);
   const spendingPublicKey = spendingKeyPair.publicKeyHex;
   const viewingPrivateKey = viewingKeyPair.privateKeyHex;
-
-  console.log("after generatePrivatekeys", spendingPublicKey, viewingPrivateKey);
 
   if (viewingPrivateKey == null) throw new Error("viewingPrivateKey is null");
 
@@ -35,7 +34,7 @@ const scan = async (provider?: providers.Web3Provider) => {
   return userAnnouncements;
 };
 
-const payment = async (provider?: providers.Web3Provider, recipient?: string) => {
+const payment = async (provider?: EthersProvider, recipient?: string) => {
   if (provider == null) throw new Error("provider is null");
   if (recipient == null || !isAddress(recipient)) throw new Error("invalid recipient");
   const signer = provider.getSigner();
@@ -47,7 +46,7 @@ const payment = async (provider?: providers.Web3Provider, recipient?: string) =>
   await tx.wait(); // transaction mined
 };
 
-const setStealthKeys = async (provider?: providers.Web3Provider) => {
+const setStealthKeys = async (provider?: EthersProvider) => {
   if (provider == null) throw new Error("provider is null");
   const signer = provider.getSigner();
   const chainId = await signer.getChainId();
@@ -65,16 +64,13 @@ const setStealthKeys = async (provider?: providers.Web3Provider) => {
 };
 
 export default function SendEther() {
-  if (typeof window == "undefined" || !window.ethereum) throw new Error("no window.ethereum");
-
   const { address: myAddress } = useAccount();
   const [userAnnouncements, setUserAnnouncements] = useState<UserAnnouncement[]>([]);
   const [accounts, setAccounts] = useState<string[]>([]);
   const [recipent, setRecipent] = useState<string | undefined>();
   const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
-
-  const provider = new providers.Web3Provider(window.ethereum);
-  const signer = provider.getSigner();
+  const signer = useEthersSigner();
+  const provider = signer?.provider;
 
   const { data: walletClient, isError, isLoading } = useWalletClient();
   useEffect(() => {
@@ -140,6 +136,27 @@ export default function SendEther() {
           </button>
           <br />
           <UserAnnouncementTable userAnnouncements={userAnnouncements} />
+        </div>
+      </div>
+      <div className="collapse collapse-arrow  bg-base-200">
+        <input type="radio" name="my-accordion-1" checked={activeAccordion === "withdraw"} onChange={() => handleAccordionClick("withdraw")} />
+        <div className="collapse-title text-xl font-medium">出金</div>
+        <div className="collapse-content">
+          (WIP...)
+          <br />
+          出金先アドレス: &nbsp;
+          <select className="select select-bordered w-full max-w-xs" value={recipent} onChange={handleChange}>
+            {accounts
+              .filter((address) => address != myAddress)
+              .map((address) => (
+                <option key={address}>{address}</option>
+              ))}
+          </select>
+          &nbsp;
+          <button className="btn btn-secondary" disabled={!signer} onClick={() => alert("未実装")}>
+            Withdraw
+          </button>
+          <br />
         </div>
       </div>
     </main>
