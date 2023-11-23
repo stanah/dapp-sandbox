@@ -4,6 +4,7 @@ import "./globals.css";
 
 import { Web3Modal } from "../context/Web3Modal";
 import Header from "@/components/Header";
+import { ConfigProvider } from "@/context/ConfigProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,13 +18,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={inter.className}>
         <Web3Modal>
-          <div className="flex flex-col h-screen">
-            <div className="sticky top-0">
-              <Header />
+          <ConfigProvider>
+            <div className="flex min-h-screen flex-col">
+              <header className="p-4">
+                <Header />
+              </header>
+              <div className="flex flex-1 flex-row">
+                <main className="flex-1 p-4">{children}</main>
+                {/* <nav className="order-first w-32 bg-blue-100 p-4">Navigation</nav> */}
+                {/* <aside className="w-32 p-4">Side</aside> */}
+              </div>
+              {/* <footer className="bg-blue-200 p-4">Footer</footer> */}
             </div>
-            <div className="flex-grow">{children}</div>
-            {/* <div className="bg-blue-500 sticky bottom-0">footer</div> */}
-          </div>
+          </ConfigProvider>
         </Web3Modal>
       </body>
     </html>

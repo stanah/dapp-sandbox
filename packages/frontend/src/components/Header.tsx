@@ -1,10 +1,22 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ConnectButton from "./ConnectButton";
+import ConfigModal from "./ConfigModal";
 
 export default function Header() {
   const router = useRouter();
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -26,6 +38,10 @@ export default function Header() {
         </ul>
       </div>
       <div className="navbar-end">
+        <ConfigModal isOpen={isModalOpen} onClose={handleCloseModal} />
+        <button onClick={handleOpenModal} className="btn btn-ghost">
+          設定
+        </button>
         <ConnectButton />
       </div>
     </div>

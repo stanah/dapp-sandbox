@@ -7,8 +7,8 @@ import { useAccount, useWalletClient } from "wagmi";
 import UserAnnouncementTable from "@/components/UserAnnouncementTable";
 import { useEthersSigner } from "@/context/ethersAdapter";
 import { EthersProvider } from "@umbracash/umbra-js/build/src/types";
+import { useConfig } from "@/context/ConfigProvider";
 
-process.env.INFURA_ID = process.env.NEXT_PUBLIC_INFURA_ID;
 const SEND_VALUE = "0.1";
 const AMOUNT = parseEther(SEND_VALUE);
 
@@ -72,6 +72,8 @@ export default function SendEther() {
   const signer = useEthersSigner();
   const provider = signer?.provider;
 
+  const { config } = useConfig();
+
   const { data: walletClient, isError, isLoading } = useWalletClient();
   useEffect(() => {
     async function exec() {
@@ -83,6 +85,10 @@ export default function SendEther() {
     }
     exec();
   }, [walletClient]);
+
+  useEffect(() => {
+    process.env.INFURA_ID = config.apiKey; // || process.env.NEXT_PUBLIC_INFURA_ID;
+  }, [config]);
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setRecipent(e.target.value);
