@@ -16,7 +16,7 @@ function truncateString(str: string, preNum: number = 6, sufNum: number = 4) {
 
 function CopyButton({ value }: { value: string }) {
   return (
-    <button className="btn" onClick={() => navigator.clipboard.writeText(value)}>
+    <button className="btn btn-xs" onClick={() => navigator.clipboard.writeText(value)}>
       {copySvg}
     </button>
   );
@@ -92,7 +92,7 @@ export default function UserAnnouncementTable({ userAnnouncements }: { userAnnou
         </thead>
         <tbody>
           {userAnnouncements.map((userAnnouncement) => (
-            <UserAnnouncementRow userAnnouncement={userAnnouncement} />
+            <UserAnnouncementRow key={userAnnouncement.txHash} userAnnouncement={userAnnouncement} />
           ))}
         </tbody>
       </table>
