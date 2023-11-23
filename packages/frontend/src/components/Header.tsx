@@ -20,6 +20,9 @@ export default function Header() {
           <li>
             <a onClick={() => router.push("/tokens")}>トークン一覧</a>
           </li>
+          <li>
+            <a onClick={() => router.push("/umbra")}>Umbra送金</a>
+          </li>
         </ul>
       </div>
       <div className="navbar-end">

@@ -1,3 +1,18 @@
+# DAppを色々試してみる
+
+## やったこと / TODO
+
+- ethers v6とviemを試す
+- ERC3525リファレンス実装をデプロイ / トークン発行
+- umbra-protocol
+  - Polygon mainnetで動作確認
+  - キー登録, 送金, スキャン
+  - TODO
+    - WithDraw
+    - ローカル環境/テストネット環境でumbra-protocolを試す (スマートコントラクトのデプロイ)
+
+## セットアップ
+
 ```bash
 # `.env`ファイルを編集する (ファイル内コメント参照)
 cp .env.example .env
