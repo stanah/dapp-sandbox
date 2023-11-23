@@ -5,6 +5,7 @@ import { isAddress, parseEther } from "viem";
 import { ethers, providers } from "ethers";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useAccount, useWalletClient } from "wagmi";
+import UserAnnouncementTable from "@/components/UserAnnouncementTable";
 
 process.env.INFURA_ID = process.env.NEXT_PUBLIC_INFURA_ID;
 const SEND_VALUE = "0.1";
@@ -61,22 +62,6 @@ const setStealthKeys = async (provider?: providers.Web3Provider) => {
 
   const tx = await registry.setStealthKeys(spendingPublicKey, viewingPublicKey, signer);
   await tx.wait(); // transaction mined
-};
-
-// userAnnouncementの内容を表示するコンポーネント
-const UserAnnouncement = ({ userAnnouncement }: { userAnnouncement: UserAnnouncement }) => {
-  return (
-    <div>
-      <p>ランダムナンバー: {userAnnouncement.randomNumber}</p>
-      <p>受信者: {userAnnouncement.receiver}</p>
-      <p>金額: {ethers.utils.formatEther(userAnnouncement.amount)}</p>
-      <p>トークン: {userAnnouncement.token}</p>
-      <p>送信者: {userAnnouncement.from}</p>
-      <p>トランザクションハッシュ: {userAnnouncement.txHash}</p>
-      <p>タイムスタンプ: {new Date(Number(userAnnouncement.timestamp) * 1000).toISOString()}</p>
-      <p>引き出し済み: {userAnnouncement.isWithdrawn ? "はい" : "いいえ"}</p>
-    </div>
-  );
 };
 
 export default function SendEther() {
@@ -154,9 +139,7 @@ export default function SendEther() {
             Scan
           </button>
           <br />
-          {userAnnouncements.map((userAnnouncement) => (
-            <UserAnnouncement userAnnouncement={userAnnouncement} />
-          ))}
+          <UserAnnouncementTable userAnnouncements={userAnnouncements} />
         </div>
       </div>
     </main>
