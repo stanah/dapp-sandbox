@@ -1,5 +1,5 @@
 // packages/frontend/src/components/ConfigModal.tsx
-
+'use client';
 import { useState } from "react";
 
 import { useConfig } from "@/context/ConfigProvider";

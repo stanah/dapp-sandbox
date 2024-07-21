@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import ConnectButton from "./ConnectButton";
+import { ConnectKitButton } from "connectkit";
+
 import ConfigModal from "./ConfigModal";
 
 export default function Header() {
@@ -27,7 +28,7 @@ export default function Header() {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
           <li>
-            <a onClick={() => router.push("/page1")}>トークン発行ページ</a>
+            <a onClick={() => router.push("/mint-token")}>トークン発行ページ</a>
           </li>
           <li>
             <a onClick={() => router.push("/tokens")}>トークン一覧</a>
@@ -42,7 +43,7 @@ export default function Header() {
         <button onClick={handleOpenModal} className="btn btn-ghost">
           設定
         </button>
-        <ConnectButton />
+        <ConnectKitButton />
       </div>
     </div>
   );

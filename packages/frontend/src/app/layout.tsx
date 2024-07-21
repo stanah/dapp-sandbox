@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { MantineProvider, createTheme, AppShell } from "@mantine/core";
+import "@mantine/core/styles.css";
 
-import { Web3Modal } from "../context/Web3Modal";
 import Header from "@/components/Header";
 import { ConfigProvider } from "@/context/ConfigProvider";
+import { Web3Provider } from "@/context/Web3Provider";
+import { checkEnvVars } from "@/loadEnv";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,25 +16,42 @@ export const metadata: Metadata = {
   description: "Web3Modal Example",
 };
 
+const theme = createTheme({
+  /** Put your mantine theme override here */
+});
+
+// 環境変数をチェック
+checkEnvVars();
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Web3Modal>
-          <ConfigProvider>
-            <div className="flex min-h-screen flex-col">
-              <header className="p-4">
-                <Header />
-              </header>
-              <div className="flex flex-1 flex-row">
-                <main className="flex-1 p-4">{children}</main>
-                {/* <nav className="order-first w-32 bg-blue-100 p-4">Navigation</nav> */}
-                {/* <aside className="w-32 p-4">Side</aside> */}
-              </div>
-              {/* <footer className="bg-blue-200 p-4">Footer</footer> */}
-            </div>
-          </ConfigProvider>
-        </Web3Modal>
+        <ConfigProvider>
+          <Web3Provider>
+            <MantineProvider theme={theme}>
+              <AppShell
+                header={{ height: 60 }}
+                // navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
+                padding="md"
+              >
+                <AppShell.Header>
+                  hoge
+                  {/* <Header /> */}
+                </AppShell.Header>
+                {/* <AppShell.Navbar p="md">
+                  Navbar
+                  {Array(15)
+                    .fill(0)
+                    .map((_, index) => (
+                      <Skeleton key={index} h={28} mt="sm" animate={false} />
+                    ))}
+                </AppShell.Navbar> */}
+                <AppShell.Main>fuga</AppShell.Main>
+              </AppShell>
+            </MantineProvider>
+          </Web3Provider>
+        </ConfigProvider>
       </body>
     </html>
   );

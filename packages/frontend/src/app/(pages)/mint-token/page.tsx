@@ -1,6 +1,6 @@
 "use client";
 
-import { useContractRead, usePrepareContractWrite, useContractWrite, useAccount } from "wagmi";
+import { useAccount, useReadContract, useWriteContract } from "wagmi";
 import { isAddress } from "viem";
 
 // 新規にデプロイしたコントラクトのABIを取得する場合
@@ -11,30 +11,33 @@ import ERC3525GettingStarted from "../../../artifacts/contracts/ERC3525GettingSt
 
 // TODO: ネットワークに応じたコントラクトアドレスを取得する
 // const contractAddress = process.env.NEXT_PUBLIC_LOCALHOST_CONTRACT_ADDRESS;
-const contractAddress = process.env.NEXT_PUBLIC_MUMBAI_CONTRACT_ADDRESS;
+const contractAddress = process.env.NEXT_PUBLIC_AMOY_CONTRACT_ADDRESS;
 
-export default function Page1() {
+export default function MintToken() {
   if (contractAddress == null || !isAddress(contractAddress)) throw new Error("CONTRACT_ADDRESS is not set");
-  const { address } = useAccount();
-  const { data, isError, isLoading } = useContractRead({
+  const { address, chain } = useAccount();
+  const { data, isError, isLoading } = useReadContract({
     address: contractAddress,
     abi: ERC3525GettingStarted.abi,
     functionName: "owner",
   });
 
-  const { config, error } = usePrepareContractWrite({
-    address: contractAddress,
-    abi: ERC3525GettingStarted.abi,
-    functionName: "mint",
-    args: [address, 10, 100], // address to_, uint256 slot_, uint256 amount_
-  });
-  const { write } = useContractWrite(config);
+  const { data: hash, error, isPending, writeContract } = useWriteContract();
+
+  const mint = () => {
+    writeContract({
+      address: contractAddress,
+      abi: ERC3525GettingStarted.abi,
+      functionName: "mint",
+      args: [address, 10, 100], // address to_, uint256 slot_, uint256 amount_
+    });
+  };
 
   return (
     <main className="flex flex-col space-y-4 items-center justify-between p-10">
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          <code className="font-mono font-bold">Page1</code>
+          <code className="font-mono font-bold">Mint Token</code>
         </p>
       </div>
 
@@ -54,7 +57,7 @@ export default function Page1() {
         </div>
       </div>
 
-      <button className="btn btn-primary" disabled={!write} onClick={() => write?.()}>
+      <button className="btn btn-primary" disabled={!mint} onClick={() => mint?.()}>
         Mint
       </button>
       {error && <div>An error occurred preparing the transaction: {error.message}</div>}

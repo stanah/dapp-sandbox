@@ -1,6 +1,6 @@
 "use client";
 
-import { utils } from "ethers";
+import { formatEther } from "ethers";
 
 import { UserAnnouncement } from "@umbracash/umbra-js";
 
@@ -44,7 +44,7 @@ const UserAnnouncementRow = ({ userAnnouncement }: { userAnnouncement: UserAnnou
         {truncateString(userAnnouncement.receiver)}
         <CopyButton value={userAnnouncement.receiver} />
       </td>
-      <td>{utils.formatEther(userAnnouncement.amount)} MATIC</td>
+      <td>{formatEther(userAnnouncement.amount.toString())} MATIC</td>
       <td>
         {truncateString(userAnnouncement.token)}
         <CopyButton value={userAnnouncement.token} />
