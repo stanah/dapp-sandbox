@@ -1,0 +1,42 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Contract
+    network: mumbai
+    source:
+      address: "0xee0a1a5f575ca95ec6b73c605667216954c46bb0"
+      abi: Contract
+      startBlock: 42550701
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - ApprovalValue
+        - SetMetadataDescriptor
+        - SlotChanged
+        - Transfer
+        - TransferValue
+      abis:
+        - name: Contract
+          file: ./abis/Contract.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: ApprovalValue(indexed uint256,indexed address,uint256)
+          handler: handleApprovalValue
+        - event: SetMetadataDescriptor(indexed address)
+          handler: handleSetMetadataDescriptor
+        - event: SlotChanged(indexed uint256,indexed uint256,indexed uint256)
+          handler: handleSlotChanged
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: TransferValue(indexed uint256,indexed uint256,uint256)
+          handler: handleTransferValue
+      file: ./src/contract.ts
