@@ -38,33 +38,6 @@ export default function Tokens() {
 
       const tokenIds = Array.from({ length: Number(totalSupply) }, (_, i) => i + 1);
       const tokenPromises = tokenIds.map(async (id) => {
-        // const owner = await readContract(config, {
-        //   address: CONTRACT_ADDRESS as `0x${string}`,
-        //   abi: ERC3525GettingStarted.abi,
-        //   functionName: "ownerOf",
-        //   args: [id],
-        // });
-        // const slot = await readContract(config, {
-        //   address: CONTRACT_ADDRESS as `0x${string}`,
-        //   abi: ERC3525GettingStarted.abi,
-        //   functionName: "slotOf",
-        //   args: [id],
-        // });
-
-        // const value = await readContract(config, {
-        //   address: CONTRACT_ADDRESS as `0x${string}`,
-        //   abi: ERC3525GettingStarted.abi,
-        //   functionName: "balanceOf(uint256)",
-        //   args: [id],
-        // });
-
-        // const tokenUri = await readContract(config, {
-        //   address: CONTRACT_ADDRESS as `0x${string}`,
-        //   abi: ERC3525GettingStarted.abi,
-        //   functionName: "tokenURI",
-        //   args: [id],
-        // });
-
         const contract = {
           functionName: "",
           address: CONTRACT_ADDRESS as `0x${string}`,
@@ -79,8 +52,7 @@ export default function Tokens() {
             { ...contract, functionName: "tokenURI", args: [id] },
           ],
         });
-        console.log(result);
-        if (result[0].status !== "success") return;
+        if (result[0].status !== "success") return null;
         if (result[0].result === address) {
           const token: Token = {
             id,
