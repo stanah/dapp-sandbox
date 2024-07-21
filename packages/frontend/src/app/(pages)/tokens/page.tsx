@@ -57,8 +57,8 @@ export default function Tokens() {
           const token: Token = {
             id,
             owner: result[0].result,
-            slot: Number(result[1].result) as number,
-            value: Number(result[2].result) as number,
+            slot: Number(result[1].result),
+            value: Number(result[2].result),
             tokenUri: result[3].result as string,
           };
           return token;

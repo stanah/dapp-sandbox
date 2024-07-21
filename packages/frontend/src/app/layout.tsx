@@ -16,13 +16,12 @@ export const metadata: Metadata = {
   description: "Web3Modal Example",
 };
 
-const myColor: MantineColorsTuple = ["#f6eeff", "#e7daf7", "#cab1ea", "#ad86dd", "#9562d2", "#854bcb", "#7d3ec9", "#6b31b2", "#5f2aa0", "#52228d"];
-// ["#eef3ff", "#dce4f5", "#b9c7e2", "#94a8d0", "#748dc1", "#5f7cb8", "#5474b4", "#44639f", "#39588f", "#2d4b81"];
-
 const theme = createTheme({
-  /** Put your mantine theme override here */
+  fontFamily: inter.style.fontFamily,
+  fontFamilyMonospace: "Monaco, Courier, monospace",
+  // fontFamilyMonospace:""
   colors: {
-    custom: myColor,
+    custom: ["#f6eeff", "#e7daf7", "#cab1ea", "#ad86dd", "#9562d2", "#854bcb", "#7d3ec9", "#6b31b2", "#5f2aa0", "#52228d"],
   },
   primaryColor: "custom",
 });
