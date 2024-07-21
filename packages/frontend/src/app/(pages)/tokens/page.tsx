@@ -1,25 +1,21 @@
 "use client";
 
 import { useAccount, useReadContract } from "wagmi";
-import { readContract } from "@wagmi/core";
-import { useRouter } from "next/navigation";
+import { readContracts, readContract } from "@wagmi/core";
 import { useState, useEffect } from "react";
 
 import ERC3525GettingStarted from "../../../artifacts/contracts/ERC3525GettingStarted.sol/ERC3525GettingStarted.json";
-import { getEnvVar } from "@/loadEnv";
 import { config } from "@/config";
+import { Token } from "@/types";
+import TokenList from "@/components/TokenList";
+import { ContractFunctionParameters } from "viem";
 
 // TODO: ネットワークに応じたコントラクトアドレスを取得する
-// const contractAddress = process.env.NEXT_PUBLIC_LOCALHOST_CONTRACT_ADDRESS;
-// const contractAddress = process.env.NEXT_PUBLIC_AMOY_CONTRACT_ADDRESS;
-const CONTRACT_ADDRESS = getEnvVar("NEXT_PUBLIC_AMOY_CONTRACT_ADDRESS");
-interface Token {
-  id: number;
-  name: string;
-}
+// const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_LOCALHOST_CONTRACT_ADDRESS;
+const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_AMOY_CONTRACT_ADDRESS;
+// const CONTRACT_ADDRESS = getEnvVar("NEXT_PUBLIC_AMOY_CONTRACT_ADDRESS");
 
 export default function Tokens() {
-  const router = useRouter();
   const { address } = useAccount();
   const [tokens, setTokens] = useState<Token[]>([]);
   const [loading, setLoading] = useState(true);
@@ -42,15 +38,58 @@ export default function Tokens() {
 
       const tokenIds = Array.from({ length: Number(totalSupply) }, (_, i) => i + 1);
       const tokenPromises = tokenIds.map(async (id) => {
-        const owner = await readContract(config, {
+        // const owner = await readContract(config, {
+        //   address: CONTRACT_ADDRESS as `0x${string}`,
+        //   abi: ERC3525GettingStarted.abi,
+        //   functionName: "ownerOf",
+        //   args: [id],
+        // });
+        // const slot = await readContract(config, {
+        //   address: CONTRACT_ADDRESS as `0x${string}`,
+        //   abi: ERC3525GettingStarted.abi,
+        //   functionName: "slotOf",
+        //   args: [id],
+        // });
+
+        // const value = await readContract(config, {
+        //   address: CONTRACT_ADDRESS as `0x${string}`,
+        //   abi: ERC3525GettingStarted.abi,
+        //   functionName: "balanceOf(uint256)",
+        //   args: [id],
+        // });
+
+        // const tokenUri = await readContract(config, {
+        //   address: CONTRACT_ADDRESS as `0x${string}`,
+        //   abi: ERC3525GettingStarted.abi,
+        //   functionName: "tokenURI",
+        //   args: [id],
+        // });
+
+        const contract = {
+          functionName: "",
           address: CONTRACT_ADDRESS as `0x${string}`,
           abi: ERC3525GettingStarted.abi,
-          functionName: "ownerOf",
-          args: [id],
-        });
+        } as ContractFunctionParameters;
 
-        if (owner === address) {
-          return { id, name: `${tokenName} #${id}` };
+        const result = await readContracts(config, {
+          contracts: [
+            { ...contract, functionName: "ownerOf", args: [id] },
+            { ...contract, functionName: "slotOf", args: [id] },
+            { ...contract, functionName: "balanceOf", args: [id] },
+            { ...contract, functionName: "tokenURI", args: [id] },
+          ],
+        });
+        console.log(result);
+        if (result[0].status !== "success") return;
+        if (result[0].result === address) {
+          const token: Token = {
+            id,
+            owner: result[0].result,
+            slot: Number(result[1].result) as number,
+            value: Number(result[2].result) as number,
+            tokenUri: result[3].result as string,
+          };
+          return token;
         }
         return null;
       });
@@ -70,28 +109,7 @@ export default function Tokens() {
           <code className="font-mono font-bold">トークン一覧</code>
         </p>
       </div>
-      <div className="overflow-x-auto">
-        {loading ? (
-          <p>読み込み中...</p>
-        ) : (
-          <table className="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>名前</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tokens.map((token) => (
-                <tr key={token.id} className="hover cursor-pointer" onClick={() => router.push(`/tokens/${token.id}`)}>
-                  <th>{token.id}</th>
-                  <td>{token.name}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+      <div className="overflow-x-auto">{loading ? <p>読み込み中...</p> : <TokenList tokens={tokens}></TokenList>}</div>
       {!loading && tokens.length === 0 && <p>トークンがありません</p>}
     </main>
   );

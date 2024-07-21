@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { MantineProvider, createTheme, AppShell } from "@mantine/core";
+import { MantineColorsTuple, MantineProvider, createTheme } from "@mantine/core";
 import "@mantine/core/styles.css";
 
-import Header from "@/components/Header";
 import { ConfigProvider } from "@/context/ConfigProvider";
 import { Web3Provider } from "@/context/Web3Provider";
 import { checkEnvVars } from "@/loadEnv";
+import BaseAppShell from "@/components/BaseAppShell";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,8 +16,15 @@ export const metadata: Metadata = {
   description: "Web3Modal Example",
 };
 
+const myColor: MantineColorsTuple = ["#f6eeff", "#e7daf7", "#cab1ea", "#ad86dd", "#9562d2", "#854bcb", "#7d3ec9", "#6b31b2", "#5f2aa0", "#52228d"];
+// ["#eef3ff", "#dce4f5", "#b9c7e2", "#94a8d0", "#748dc1", "#5f7cb8", "#5474b4", "#44639f", "#39588f", "#2d4b81"];
+
 const theme = createTheme({
   /** Put your mantine theme override here */
+  colors: {
+    custom: myColor,
+  },
+  primaryColor: "custom",
 });
 
 // 環境変数をチェック
@@ -29,26 +36,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <ConfigProvider>
           <Web3Provider>
-            <MantineProvider theme={theme}>
-              <AppShell
-                header={{ height: 60 }}
-                // navbar={{ width: 300, breakpoint: "sm", collapsed: { mobile: !opened } }}
-                padding="md"
-              >
-                <AppShell.Header>
-                  hoge
-                  {/* <Header /> */}
-                </AppShell.Header>
-                {/* <AppShell.Navbar p="md">
-                  Navbar
-                  {Array(15)
-                    .fill(0)
-                    .map((_, index) => (
-                      <Skeleton key={index} h={28} mt="sm" animate={false} />
-                    ))}
-                </AppShell.Navbar> */}
-                <AppShell.Main>fuga</AppShell.Main>
-              </AppShell>
+            <MantineProvider defaultColorScheme="dark" theme={theme}>
+              <BaseAppShell>{children}</BaseAppShell>
             </MantineProvider>
           </Web3Provider>
         </ConfigProvider>
