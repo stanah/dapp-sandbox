@@ -28,9 +28,6 @@ const privateKey7 = process.env.PRIVATE_KEY_7 || "";
 const privateKey8 = process.env.PRIVATE_KEY_8 || "";
 const privateKey9 = process.env.PRIVATE_KEY_9 || "";
 
-const alchemyPolygonUrl = process.env.ALCHEMY_POLYGON_MAINNET_URL || "";
-const alchemyMumbaiUrl = process.env.ALCHEMY_POLYGON_MUMBAI_URL || "";
-
 const config: HardhatUserConfig = {
   networks: {
     hardhat: {
@@ -49,11 +46,11 @@ const config: HardhatUserConfig = {
       ],
     },
     polygon: {
-      url: alchemyPolygonUrl,
+      url: "https://polygon-rpc.com/",
       accounts: [deployPrivateKey],
     },
-    mumbai: {
-      url: alchemyMumbaiUrl,
+    amoy: {
+      url: "https://rpc-amoy.polygon.technology/",
       accounts: [deployPrivateKey],
     },
   },

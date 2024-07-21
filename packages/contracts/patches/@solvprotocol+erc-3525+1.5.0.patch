@@ -1,0 +1,47 @@
+diff --git a/node_modules/@solvprotocol/erc-3525/ERC3525.sol b/node_modules/@solvprotocol/erc-3525/ERC3525.sol
+index dfa3905..eff3598 100644
+--- a/node_modules/@solvprotocol/erc-3525/ERC3525.sol
++++ b/node_modules/@solvprotocol/erc-3525/ERC3525.sol
+@@ -12,7 +12,7 @@ import "./IERC3525Receiver.sol";
+ import "./extensions/IERC721Enumerable.sol";
+ import "./extensions/IERC721Metadata.sol";
+ import "./extensions/IERC3525Metadata.sol";
+-import "./periphery/interface/IERC3525MetadataDescriptor.sol";
++import "./periphery/interfaces/IERC3525MetadataDescriptor.sol";
+ 
+ contract ERC3525 is Context, IERC3525Metadata, IERC721Enumerable {
+     using Strings for address;
+diff --git a/node_modules/@solvprotocol/erc-3525/periphery/ERC3525MetadataDescriptor.sol b/node_modules/@solvprotocol/erc-3525/periphery/ERC3525MetadataDescriptor.sol
+index 8ed98dc..5670afc 100644
+--- a/node_modules/@solvprotocol/erc-3525/periphery/ERC3525MetadataDescriptor.sol
++++ b/node_modules/@solvprotocol/erc-3525/periphery/ERC3525MetadataDescriptor.sol
+@@ -4,7 +4,7 @@ pragma solidity ^0.8.1;
+ 
+ import "@openzeppelin/contracts/utils/Strings.sol";
+ import "@openzeppelin/contracts/utils/Base64.sol";
+-import "./interface/IERC3525MetadataDescriptor.sol";
++import "./interfaces/IERC3525MetadataDescriptor.sol";
+ import "../extensions/IERC3525Metadata.sol";
+ 
+ contract ERC3525MetadataDescriptor is IERC3525MetadataDescriptor {
+diff --git a/node_modules/@solvprotocol/erc-3525/periphery/ERC3525MetadataDescriptorUpgradeable.sol b/node_modules/@solvprotocol/erc-3525/periphery/ERC3525MetadataDescriptorUpgradeable.sol
+index 0a0e07e..2232a5a 100644
+--- a/node_modules/@solvprotocol/erc-3525/periphery/ERC3525MetadataDescriptorUpgradeable.sol
++++ b/node_modules/@solvprotocol/erc-3525/periphery/ERC3525MetadataDescriptorUpgradeable.sol
+@@ -4,7 +4,7 @@ pragma solidity ^0.8.1;
+ 
+ import "@openzeppelin/contracts/utils/Strings.sol";
+ import "@openzeppelin/contracts/utils/Base64.sol";
+-import "./interface/IERC3525MetadataDescriptorUpgradeable.sol";
++import "./interfaces/IERC3525MetadataDescriptorUpgradeable.sol";
+ import "../extensions/IERC3525MetadataUpgradeable.sol";
+ import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+ 
+diff --git a/node_modules/@solvprotocol/erc-3525/periphery/interface/IERC3525MetadataDescriptor.sol b/node_modules/@solvprotocol/erc-3525/periphery/interfaces/IERC3525MetadataDescriptor.sol
+similarity index 100%
+rename from node_modules/@solvprotocol/erc-3525/periphery/interface/IERC3525MetadataDescriptor.sol
+rename to node_modules/@solvprotocol/erc-3525/periphery/interfaces/IERC3525MetadataDescriptor.sol
+diff --git a/node_modules/@solvprotocol/erc-3525/periphery/interface/IERC3525MetadataDescriptorUpgradeable.sol b/node_modules/@solvprotocol/erc-3525/periphery/interfaces/IERC3525MetadataDescriptorUpgradeable.sol
+similarity index 100%
+rename from node_modules/@solvprotocol/erc-3525/periphery/interface/IERC3525MetadataDescriptorUpgradeable.sol
+rename to node_modules/@solvprotocol/erc-3525/periphery/interfaces/IERC3525MetadataDescriptorUpgradeable.sol
