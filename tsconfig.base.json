@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@dapp-sandbox/frontend": ["packages/frontend/"],
+      "@/*": ["packages/frontend/src/*"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
