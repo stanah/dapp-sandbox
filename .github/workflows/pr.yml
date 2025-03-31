@@ -8,8 +8,8 @@ on:
       - "packages/ui/**"
 
 jobs:
-  version-plan-check:
-    name: Version Plan Check
+  conventional-commits-check:
+    name: Conventional Commits Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -32,5 +32,7 @@ jobs:
       - name: Set Git SHAs
         uses: nrwl/nx-set-shas@v4
 
-      - name: Check Version Plan
-        run: pnpm nx release plan:check --verbose
+      - name: Verify Conventional Commits
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
