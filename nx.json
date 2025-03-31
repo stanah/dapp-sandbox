@@ -64,5 +64,26 @@
       "dependsOn": ["^build"]
     }
   },
+  "release": {
+    "versionPlans": {
+      "ignorePatternsForPlanCheck": ["**/*.spec.ts", "**/*.test.ts", "**/*.spec.tsx", "**/*.test.tsx", "**/*.stories.tsx"]
+    },
+    "projects": ["packages/ui"],
+    "git": {
+      "commit": true,
+      "tag": true
+    },
+    "version": {
+      "generatorOptions": {
+        "currentVersionResolver": "disk"
+      }
+    },
+    "releaseTagPattern": "{version}",
+    "changelog": {
+      "automaticFromRef": true,
+      "workspaceChangelog": false,
+      "changelogEntry": true
+    }
+  },
   "useLegacyCache": true
 }

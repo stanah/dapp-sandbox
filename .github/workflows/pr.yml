@@ -1,0 +1,33 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "packages/ui/**"
+
+jobs:
+  version-plan-check:
+    name: Version Plan Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Set Git SHAs
+        uses: nrwl/nx-set-shas@v4
+
+      - name: Check Version Plan
+        run: yarn nx release plan:check --verbose
