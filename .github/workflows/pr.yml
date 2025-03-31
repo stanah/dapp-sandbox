@@ -17,17 +17,20 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Corepack
+        run: corepack enable
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "yarn"
+          cache: "pnpm"
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install
 
       - name: Set Git SHAs
         uses: nrwl/nx-set-shas@v4
 
       - name: Check Version Plan
-        run: yarn nx release plan:check --verbose
+        run: pnpm nx release plan:check --verbose
