@@ -33,7 +33,7 @@ jobs:
         uses: nrwl/nx-set-shas@v4
 
       - name: Release
-        run: yarn nx release ui
+        run: yarn nx release ui --verbose
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
