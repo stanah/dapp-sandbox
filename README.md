@@ -19,7 +19,7 @@ cp .env.example .env
 vim .env
 
 cd packages/viem-sandbox
-# yarn install
+# pnpm install
 
 # ローカルノード立ち上げ
 npx hardhat node
@@ -29,13 +29,13 @@ npx hardhat run --network localhost scripts/deploy.ts
 # npx hardhat run --network mumbai scripts/deploy.ts
 
 cd ../frontend
-# yarn install
+# pnpm install
 
 # フロントエンド用の環境変数ファイルを編集する
 cp .env.example .env
 vim .env
 
-yarn dev
+pnpm dev
 
 ```
 
@@ -53,6 +53,6 @@ Next steps:
 
 2. Type `cd sandbox` to enter the subgraph.
 
-3. Run `yarn deploy` to deploy the subgraph.
+3. Run `pnpm deploy` to deploy the subgraph.
 
 Make sure to visit the documentation on https://thegraph.com/docs/ for further information.
