@@ -1,0 +1,11 @@
+//tsconfig.json
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@dapp-sandbox/ui": ["packages/ui/src/index.ts"],
+      "@dapp-sandbox/ui/*": ["packages/ui/src/*"]
+    }
+  }
+}

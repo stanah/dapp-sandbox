@@ -15,8 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@/*": ["packages/frontend/src/*"],
       "@dapp-sandbox/frontend": ["packages/frontend/"],
-      "@/*": ["packages/frontend/src/*"]
+      "@dapp-sandbox/ui": ["packages/ui/src/index.ts"],
+      "@dapp-sandbox/ui/server": ["packages/ui/src/server.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

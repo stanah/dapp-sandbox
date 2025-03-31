@@ -1,7 +1,7 @@
 "use client";
 
 import { useAccount, useReadContract } from "wagmi";
-import { readContracts, readContract } from "@wagmi/core";
+import { readContracts } from "@wagmi/core";
 import { useState, useEffect } from "react";
 
 import ERC3525GettingStarted from "../../../artifacts/contracts/ERC3525GettingStarted.sol/ERC3525GettingStarted.json";

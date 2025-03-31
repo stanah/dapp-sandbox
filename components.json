@@ -1,0 +1,15 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": false,
+  "tailwind": {
+    "config": "packages/**/tailwind.config.js",
+    "css": "packages/**/app/global.css",
+    "baseColor": "stone",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@dapp-sandbox/ui/components",
+    "utils": "@dapp-sandbox/ui/shared/utils"
+  }
+}
