@@ -2,8 +2,8 @@ name: Release UI Library
 
 on:
   push:
-    branches:
-      - main
+    # branches:
+    #   - main
     paths:
       - "packages/ui/**"
 
