@@ -42,14 +42,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run ESLint
+      - name: Run ESLint with NX and generate SARIF
         env:
           SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
-        run: npx eslint .
-          --config .eslintrc.json
-          --ext .js,.jsx,.ts,.tsx
-          --format @microsoft/eslint-formatter-sarif
-          --output-file eslint-results.sarif
+        run: |
+          # Install required formatter for SARIF output
+          pnpm add -D @microsoft/eslint-formatter-sarif
+          
+          # Run nx lint with --format option and redirect output to a file
+          npx nx run-many --target=lint --all --format=@microsoft/eslint-formatter-sarif > eslint-results.sarif
         continue-on-error: true
 
       - name: Upload analysis results to GitHub
